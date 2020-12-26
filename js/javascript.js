@@ -1,4 +1,5 @@
 import {Ball} from './ball.js';
+import {Controll} from './controll.js';
 
 class Starter {
     constructor() {
@@ -10,9 +11,18 @@ class Starter {
 
     start() {
         let size = 15;
-        let ball = new Ball(this.width / 2, this.height - size);
-        this.drawBorder();
-        ball.draw(this.context, '#26cc1c');
+        this.ball = new Ball(this.width / 2, this.height - size);
+        let controll = new Controll(this.updateCallback, this);
+
+        controll.timer();
+    }
+
+    updateCallback(self) {
+        self.context.clearRect(0, 0, self.width, self.height);
+
+        self.drawBorder();
+        self.ball.move();
+        self.ball.draw(self.context, '#26cc1c');
     }
 
     drawBorder() {
