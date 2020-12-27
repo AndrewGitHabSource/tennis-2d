@@ -33,7 +33,7 @@ export class Map {
     createMatrix(m, n) {
         return Array.from({
             length: m
-        }, () => new Array(n).fill(this.random(0, 2)));
+        }, () => new Array(n).fill(this.random(1, 2)));
     }
 
     random(min, max) {
