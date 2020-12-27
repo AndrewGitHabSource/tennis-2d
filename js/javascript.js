@@ -1,5 +1,6 @@
 import {Ball} from './ball.js';
 import {Controll} from './controll.js';
+import {Player} from './player.js';
 
 class Starter {
     constructor() {
@@ -7,11 +8,13 @@ class Starter {
         this.context = canvas.getContext("2d");
         this.width = 900;
         this.height = 500;
+        this.widthPlayer = 100;
     }
 
     start() {
         let size = 15;
         this.ball = new Ball(this.width / 2, this.height - size);
+        this.player = new Player((this.width / 2) - size, this.height - size);
         let controll = new Controll(this.updateCallback, this);
 
         controll.timer();
@@ -19,10 +22,11 @@ class Starter {
 
     updateCallback(self) {
         self.context.clearRect(0, 0, self.width, self.height);
-
         self.drawBorder();
         self.ball.move();
         self.ball.draw(self.context, '#26cc1c');
+        self.player.draw(self.context);
+        self.ball.playerCollision(self.player.x, self.player.y, self.widthPlayer);
     }
 
     drawBorder() {

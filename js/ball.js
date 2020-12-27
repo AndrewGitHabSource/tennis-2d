@@ -17,24 +17,42 @@ export class Ball extends gameObject {
     }
 
     borderCollision(width, height) {
-        if (this.x <= 0 || this.x >= width) {
+        if (this.x <= this.size || this.x >= width) {
             return 'left';
-        } else if (this.y <= 0) {
+        } else if (this.y <= this.size) {
             return 'top';
+        } else if (this.y > height && this.y < height + 30) {
+            return 'stop';
         } else {
             return false;
         }
     }
 
+    playerCollision(posX, posY, width){
+        if (this.x >= posX && this.x <= posX + width && this.y === posY){
+            this.step_y *= -1;
+            let y = this.y + this.step_y;
+            this.setPosition(this.x, y);
+        }
+    }
+
     move() {
-        switch (this.borderCollision()) {
-            case 'left': this.step_x *= -1; break;
-            case 'top': this.step_y *= -1; break;
+        switch (this.borderCollision(900, 500)) {
+            case 'left':
+                this.step_x *= -1;
+                break;
+            case 'top':
+                this.step_y *= -1;
+                break;
+            case 'stop':
+                console.log('Game over');
+                this.step_y = 0;
+                break;
         }
 
         let x = this.x + this.step_x;
         let y = this.y + this.step_y;
 
-        this.set(x, y);
+        this.setPosition(x, y);
     }
 }
