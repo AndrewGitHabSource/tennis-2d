@@ -1,6 +1,7 @@
 import {Ball} from './ball.js';
 import {Controll} from './controll.js';
 import {Player} from './player.js';
+import {Map} from './map.js';
 
 class Starter {
     constructor() {
@@ -13,20 +14,26 @@ class Starter {
 
     start() {
         let size = 15;
-        this.ball = new Ball(this.width / 2, this.height - size);
-        this.player = new Player((this.width / 2) - size, this.height - size);
+        this.ball = new Ball(this.width / 2 - size, this.height - size);
+        this.player = new Player((this.width / 2) - size, this.height - size, this.context);
+        this.map = new Map(this.context);
         let controll = new Controll(this.updateCallback, this);
+
+        this.map.draw();
+        this.player.draw(this.context);
+        this.drawBorder();
 
         controll.timer();
     }
 
     updateCallback(self) {
         self.context.clearRect(0, 0, self.width, self.height);
-        self.drawBorder();
-        self.ball.move();
+        self.ball.move(self.context);
         self.ball.draw(self.context, '#26cc1c');
-        self.player.draw(self.context);
         self.ball.playerCollision(self.player.x, self.player.y, self.widthPlayer);
+        self.player.draw(this.context);
+        self.drawBorder();
+        self.map.ballCollision(self.ball.x, self.ball.y, self.ball);
     }
 
     drawBorder() {
