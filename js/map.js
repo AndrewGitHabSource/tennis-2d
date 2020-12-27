@@ -44,11 +44,9 @@ export class Map {
         let i = parseInt(x / this.size);
         let j = parseInt(y / this.size);
 
-        console.log('i - ' + i);
-        console.log('j - ' + j);
-
-        if (this.matrix[i][j] === 1){
+        if (this.matrix[i][j] === 1 || this.matrix[i][j + 1] === 1){
             this.matrix[i][j] = 0;
+            this.matrix[i][j + 1] = 0;
 
             ball.step_y *= -1;
             ball.step_x *= -1;

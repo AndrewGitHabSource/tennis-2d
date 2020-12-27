@@ -19,10 +19,6 @@ class Starter {
         this.map = new Map(this.context);
         let controll = new Controll(this.updateCallback, this);
 
-        this.map.draw();
-        this.player.draw(this.context);
-        this.drawBorder();
-
         controll.timer();
     }
 
